@@ -14,9 +14,7 @@ APP_ENV=dev
 APP_DEBUG=1
 WITH_DATABASE=no
 
-if [[ ${DOCKER_TAG} == "latest" ]]; then
-    PHP_VERSION=latest
-else
+if [[ ${DOCKER_TAG} != "latest" ]]; then
     CALC_1=$(echo ${DOCKER_TAG} | cut -d "-" -f1)
     CALC_2=$(echo ${DOCKER_TAG} | cut -d "-" -f2)
     CALC_3=$(echo ${DOCKER_TAG} | cut -d "-" -f3)
