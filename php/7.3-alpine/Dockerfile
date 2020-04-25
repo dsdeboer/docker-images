@@ -1,7 +1,6 @@
 ARG APP_ENV=${APP_ENV:-dev}
 ARG APP_DEBUG=1
 ARG PHP_TYPE=${PHP_TYPE:-cli}
-ARG TIMEZONE=${TIMEZONE:-"Europe/Amsterdam"}
 FROM php:7.3-${PHP_TYPE}-alpine as charpand-php
 
 WORKDIR /var/www
@@ -15,7 +14,7 @@ RUN set -ex \
     && if [[ "${APP_ENV}" == "prod" ]]; then docker-php-ext-install opcache; fi \
     && if [[ "${APP_ENV}" == "prod" ]]; then docker-php-ext-enable opcache; fi \
     && apk add tzdata \
-    && cp "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime \
+    && cp "/usr/share/zoneinfo/Europe/Amsterdam" /etc/localtime \
     && rm -rf /tmp/* /var/cache/apk/*
 
 RUN set -ex && if [[ "${APP_ENV}" == "prod" ]]; then mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"; fi
@@ -23,7 +22,7 @@ RUN set -ex && if [[ "${APP_ENV}" != "prod" ]]; then  mv "$PHP_INI_DIR/php.ini-d
 RUN echo "date.timezone=${TIMEZONE" >> "$PHP_INI_DIR/php.ini"
 
 RUN set -ex \
-    && echo "date.timezone = ${TIMEZONE}" >> "$PHP_INI_DIR/php.ini" \
+    && echo "date.timezone = Europe/Amsterdam" >> "$PHP_INI_DIR/php.ini" \
     && echo "short_open_tag = Off" >> "$PHP_INI_DIR/php.ini" \
     && echo "log_errors = On" >> "$PHP_INI_DIR/php.ini" \
     && echo "error_reporting = E_ALL" >> "$PHP_INI_DIR/php.ini" \
