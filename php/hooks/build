@@ -6,10 +6,13 @@ TYPES=(cli fpm)
 CALC_1=$(echo ${DOCKER_TAG} | cut -d "-" -f1)
 CALC_2=$(echo ${DOCKER_TAG} | cut -d "-" -f2)
 CALC_3=$(echo ${DOCKER_TAG} | cut -d "-" -f3)
+CALC_4=$(echo ${DOCKER_TAG} | cut -d "-" -f4)
 
 PHP_VERSION=7.4
 PHP_TYPE=cli
 APP_ENV=dev
+APP_DEBUG=1
+WITH_DATABASE=no
 
 if [[ ${DOCKER_TAG} == "latest" ]]; then
     PHP_VERSION=latest
@@ -24,9 +27,18 @@ else
     [[ " ${ENVS[@]} " =~ " ${CALC_1} " ]] && APP_ENV=${CALC_1}
     [[ " ${ENVS[@]} " =~ " ${CALC_2} " ]] && APP_ENV=${CALC_2}
     [[ " ${ENVS[@]} " =~ " ${CALC_3} " ]] && APP_ENV=${CALC_3}
+    [[ ${CALC_1} == "pgsql" ]] && WITH_DATABASE=yes
+    [[ ${CALC_2} == "pgsql" ]] && WITH_DATABASE=yes
+    [[ ${CALC_3} == "pgsql" ]] && WITH_DATABASE=yes
+    [[ ${CALC_4} == "pgsql" ]] && WITH_DATABASE=yes
 fi
 
-echo "Building: ${PHP_VERSION}-${PHP_TYPE}-${APP_ENV}"
+[[ ${APP_ENV} == "prod" ]] && APP_DEBUG=0
 
-exit
-docker build . --build-arg APP_ENV=${APP_ENV} --build-arg PHP_TYPE=${PHP_TYPE} --build-arg PHP_VERSION=${PHP_VERSION} -t ${IMAGE_NAME}
+docker build . \
+        --build-arg APP_ENV=${APP_ENV} \
+        --build-arg APP_DEBUG=${APP_DEBUG} \
+        --build-arg WITH_DATABASE=${WITH_DATABASE} \
+        --build-arg PHP_TYPE=${PHP_TYPE} \
+        --build-arg PHP_VERSION=${PHP_VERSION} \
+        -t ${IMAGE_NAME}
