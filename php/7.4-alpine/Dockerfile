@@ -19,7 +19,7 @@ RUN set -ex \
 
 RUN set -ex && if [[ "${APP_ENV}" == "prod" ]]; then mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"; fi
 RUN set -ex && if [[ "${APP_ENV}" != "prod" ]]; then  mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"; fi
-RUN echo "date.timezone=${TIMEZONE" >> "$PHP_INI_DIR/php.ini"
+RUN echo "date.timezone=Europe/Amsterdam" >> "$PHP_INI_DIR/php.ini"
 
 RUN set -ex \
     && echo "date.timezone = Europe/Amsterdam" >> "$PHP_INI_DIR/php.ini" \
