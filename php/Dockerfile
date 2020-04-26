@@ -4,7 +4,10 @@ ARG PHP_TYPE=${PHP_TYPE:-cli}
 ARG WITH_DATABASE=${WITH_DATABASE:-no}
 ARG PHP_VERSION=${PHP_VERSION:-7.3}
 ARG TIMEZONE=${TIMEZONE:-"Europe/Amsterdam"}
+
 FROM php:${PHP_VERSION}-${PHP_TYPE}-alpine
+
+RUN echo "Building with, ${APP_ENV}, ${PHP_VERSION}, ${PHP_TYPE}, ${WITH_DATABASE}"
 
 WORKDIR /var/www
 
