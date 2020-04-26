@@ -2,7 +2,7 @@ ARG APP_ENV=${APP_ENV:-dev}
 ARG APP_DEBUG=${APP_DEBUG:-1}
 ARG PHP_TYPE=${PHP_TYPE:-cli}
 ARG WITH_DATABASE=${WITH_DATABASE:-no}
-ARG PHP_VERSION=${PHP_VERSION:-7.2}
+ARG PHP_VERSION=${PHP_VERSION:-7.3}
 ARG TIMEZONE=${TIMEZONE:-"Europe/Amsterdam"}
 FROM php:${PHP_VERSION}-${PHP_TYPE}-alpine
 
@@ -44,3 +44,11 @@ RUN set -ex \
 RUN set -ex && rm -rf /tmp/* /var/cache/apk/*
 
 CMD ["php-fpm"]
+
+WORKDIR /root
+RUN set -ex; \
+    php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"; \
+    php -r "\$lines=file('https://composer.github.io/installer.sig',FILE_IGNORE_NEW_LINES); if (  hash_file('SHA384', 'composer-setup.php') ===  \$lines[0] ) { echo 'In    staller verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"; \
+    php composer-setup.php --install-dir=/usr/local/bin --filename=composer; \
+    php -r "unlink('composer-setup.php');";
+

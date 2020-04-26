@@ -14,23 +14,10 @@ APP_ENV=dev
 APP_DEBUG=1
 WITH_DATABASE=no
 
-if [[ ${DOCKER_TAG} != "latest" ]]; then
-    CALC_1=$(echo ${DOCKER_TAG} | cut -d "-" -f1)
-    CALC_2=$(echo ${DOCKER_TAG} | cut -d "-" -f2)
-    CALC_3=$(echo ${DOCKER_TAG} | cut -d "-" -f3)
-
-    [[ " ${VERSIONS[@]} " =~ " ${CALC_1} " ]] && PHP_VERSION=${CALC_1}
-    [[ " ${TYPES[@]} " =~ " ${CALC_1} " ]] && PHP_TYPE=${CALC_1}
-    [[ " ${TYPES[@]} " =~ " ${CALC_2} " ]] && PHP_TYPE=${CALC_2}
-    [[ " ${ENVS[@]} " =~ " ${CALC_1} " ]] && APP_ENV=${CALC_1}
-    [[ " ${ENVS[@]} " =~ " ${CALC_2} " ]] && APP_ENV=${CALC_2}
-    [[ " ${ENVS[@]} " =~ " ${CALC_3} " ]] && APP_ENV=${CALC_3}
-    [[ ${CALC_1} == "pgsql" ]] && WITH_DATABASE=yes
-    [[ ${CALC_2} == "pgsql" ]] && WITH_DATABASE=yes
-    [[ ${CALC_3} == "pgsql" ]] && WITH_DATABASE=yes
-    [[ ${CALC_4} == "pgsql" ]] && WITH_DATABASE=yes
-fi
-
+[[ " ${VERSIONS[@]} " =~ " ${CALC_1} " ]] && PHP_VERSION=${CALC_1}
+[[ " ${TYPES[@]} " =~ " ${CALC_2} " ]] && PHP_TYPE=${CALC_2}
+[[ " ${ENVS[@]} " =~ " ${CALC_3} " ]] && APP_ENV=${CALC_3}
+[[ ${CALC_4} == "pgsql" ]] && WITH_DATABASE=yes
 [[ ${APP_ENV} == "prod" ]] && APP_DEBUG=0
 
 docker build . \
