@@ -36,11 +36,14 @@ if [[ ${CALC_1} == ${PHP_VERSION} ]]; then
         fi
     fi
 else
-    echo "second"
     if [[ ${CALC_2} == ${PHP_TYPE} ]]; then
         add_tag "${CALC_1}-${CALC_3}" ${CALC_4}
         if [[ ${CALC_3} == ${APP_ENV} ]]; then
             add_tag "${CALC_1}" ${CALC_4}
+        fi
+    else
+        if [[ ${CALC_3} == ${APP_ENV} ]]; then
+            add_tag "${CALC_1}-${CALC_2}" ${CALC_4}
         fi
     fi
 fi
