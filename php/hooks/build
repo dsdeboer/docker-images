@@ -12,12 +12,14 @@ PHP_VERSION=7.4
 PHP_TYPE=cli
 APP_ENV=dev
 APP_DEBUG=1
-WITH_DATABASE="no"
 
 [[ " ${VERSIONS[@]} " =~ " ${CALC_1} " ]] && PHP_VERSION="${CALC_1}"
 [[ " ${TYPES[@]} " =~ " ${CALC_2} " ]] && PHP_TYPE="${CALC_2}"
 [[ " ${ENVS[@]} " =~ " ${CALC_3} " ]] && APP_ENV="${CALC_3}"
-[[ ${CALC_4} == "pgsql" ]] && WITH_DATABASE="yes"
 [[ ${APP_ENV} == "prod" ]] && APP_DEBUG=0
 
-docker build --build-arg APP_ENV=${APP_ENV} --build-arg APP_DEBUG=${APP_DEBUG} --build-arg WITH_DATABASE=${WITH_DATABASE} --build-arg PHP_TYPE=${PHP_TYPE} --build-arg PHP_VERSION=${PHP_VERSION} -t ${IMAGE_NAME} .
+if [[ ${CALC_4}  == "pgsql" ]]; then 
+    docker build --build-arg APP_ENV=${APP_ENV} --build-arg APP_DEBUG=${APP_DEBUG} --build-arg PHP_TYPE=${PHP_TYPE} --build-arg PHP_VERSION=${PHP_VERSION} -t ${IMAGE_NAME} -f Dockerfile.pgsql .
+else
+    docker build --build-arg APP_ENV=${APP_ENV} --build-arg APP_DEBUG=${APP_DEBUG} --build-arg PHP_TYPE=${PHP_TYPE} --build-arg PHP_VERSION=${PHP_VERSION} -t ${IMAGE_NAME} -f Dockerfile .
+fi

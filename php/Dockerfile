@@ -1,7 +1,6 @@
 ARG APP_ENV=dev
 ARG APP_DEBUG=1
 ARG PHP_TYPE=cli
-ARG WITH_DATABASE=no
 ARG PHP_VERSION=7.3
 
 FROM php:${PHP_VERSION}-${PHP_TYPE}-alpine
@@ -15,12 +14,9 @@ ENV APP_DEBUG $APP_DEBUG
 
 RUN set -ex 
 RUN apk add --update icu-dev oniguruma-dev libzip-dev libxml2-dev bzip2-dev curl-dev 
-RUN if [[ "${WITH_DATABASE}" == "yes" ]]; then apk add --update postgresql-dev git; fi 
 RUN docker-php-ext-install -j4 intl mbstring zip xml bz2 curl json 
 RUN if [[ "${APP_ENV}" == "prod" ]]; then docker-php-ext-install opcache; fi 
 RUN if [[ "${APP_ENV}" == "prod" ]]; then docker-php-ext-enable opcache; fi 
-RUN if [[ "${WITH_DATABASE}" == "yes" ]]; then docker-php-ext-install pdo pgsql pdo_pgsql; fi 
-RUN if [[ "${WITH_DATABASE}" == "yes" ]]; then docker-php-ext-enable pdo pgsql pdo_pgsql; fi 
 RUN apk add tzdata 
 RUN cp "/usr/share/zoneinfo/Europe/Amsterdam" /etc/localtime 
 RUN rm -rf /tmp/* /var/cache/apk/*
