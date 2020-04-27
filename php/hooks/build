@@ -21,10 +21,9 @@ WITH_DATABASE="no"
 [[ ${APP_ENV} == "prod" ]] && APP_DEBUG=0
 
 docker build . \
-        --build-arg \
-                APP_ENV=${APP_ENV} \
-                APP_DEBUG=${APP_DEBUG} \
-                WITH_DATABASE=${WITH_DATABASE} \
-                PHP_TYPE=${PHP_TYPE} \
-                PHP_VERSION=${PHP_VERSION} \
+        --build-arg APP_ENV=${APP_ENV} \
+        --build-arg APP_DEBUG=${APP_DEBUG} \
+        --build-arg WITH_DATABASE=${WITH_DATABASE} \
+        --build-arg PHP_TYPE=${PHP_TYPE} \
+        --build-arg PHP_VERSION=${PHP_VERSION} \
         -t ${IMAGE_NAME}
