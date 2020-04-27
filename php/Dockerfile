@@ -7,6 +7,8 @@ ARG TIMEZONE=${TIMEZONE:-"Europe/Amsterdam"}
 
 FROM php:${PHP_VERSION}-${PHP_TYPE}-alpine
 
+RUN echo "Building using ${PHP_VERSION}, ${APP_ENV}, ${PHP_TYPE}, ${WITH_DATABASE}"
+
 WORKDIR /var/www
 
 ENV APP_ENV $APP_ENV
