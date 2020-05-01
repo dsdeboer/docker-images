@@ -1,0 +1,21 @@
+#!/bin/bash
+ENVS=(prod dev)
+TYPES=(cli fpm)
+
+CALC_2=$(echo ${DOCKER_TAG} | cut -d "-" -f2)
+CALC_3=$(echo ${DOCKER_TAG} | cut -d "-" -f3)
+CALC_4=$(echo ${DOCKER_TAG} | cut -d "-" -f4)
+
+PHP_TYPE=cli
+APP_ENV=dev
+APP_DEBUG=1
+
+[[ " ${TYPES[@]} " =~ " ${CALC_2} " ]] && PHP_TYPE="${CALC_2}"
+[[ " ${ENVS[@]} " =~ " ${CALC_3} " ]] && APP_ENV="${CALC_3}"
+[[ ${APP_ENV} == "prod" ]] && APP_DEBUG=0
+
+if [[ ${CALC_4}  == "pgsql" ]]; then 
+    docker build --build-arg APP_ENV=${APP_ENV} --build-arg APP_DEBUG=${APP_DEBUG} --build-arg PHP_TYPE=${PHP_TYPE} -t ${IMAGE_NAME} -f Dockerfile.pgsql .
+else
+    docker build --build-arg APP_ENV=${APP_ENV} --build-arg APP_DEBUG=${APP_DEBUG} --build-arg PHP_TYPE=${PHP_TYPE} -t ${IMAGE_NAME} -f Dockerfile .
+fi

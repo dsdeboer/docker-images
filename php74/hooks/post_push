@@ -1,0 +1,49 @@
+#!/bin/bash
+ENVS=(prod dev)
+VERSIONS=(php73 php74 php80)
+TYPES=(cli fpm)
+
+function add_tag() {
+    NEW_TAG=$1
+    if [[ ! -z ${2} ]]; then 
+        NEW_TAG=$1-$2
+    fi
+    echo "[***] Adding tag ${NEW_TAG}"
+    # docker tag $IMAGE_NAME $DOCKER_REPO:$NEW_TAG
+    # docker push $DOCKER_REPO:$NEW_TAG
+}
+
+CALC_1=$(echo ${DOCKER_TAG} | cut -d "-" -f1)
+CALC_2=$(echo ${DOCKER_TAG} | cut -d "-" -f2)
+CALC_3=$(echo ${DOCKER_TAG} | cut -d "-" -f3)
+CALC_4=$(echo ${DOCKER_TAG} | cut -d "-" -f4)
+
+PHP_VERSION=7.4
+PHP_TYPE=cli
+APP_ENV=dev
+WITH_DATABASE=no
+
+if [[ ${CALC_1} == ${PHP_VERSION} ]]; then
+    add_tag "${CALC_2}-${CALC_3}" ${CALC_4}
+    if [[ ${CALC_2} == ${PHP_TYPE} ]]; then
+        add_tag "${CALC_3}" ${CALC_4}
+        if [[ ${CALC_3} == ${APP_ENV} ]]; then
+            if [[ ! -z ${CALC_4} ]]; then 
+                add_tag "${CALC_4}"
+            else
+                add_tag "latest"
+            fi
+        fi
+    fi
+else
+    if [[ ${CALC_2} == ${PHP_TYPE} ]]; then
+        add_tag "${CALC_1}-${CALC_3}" ${CALC_4}
+        if [[ ${CALC_3} == ${APP_ENV} ]]; then
+            add_tag "${CALC_1}" ${CALC_4}
+        fi
+    else
+        if [[ ${CALC_3} == ${APP_ENV} ]]; then
+            add_tag "${CALC_1}-${CALC_2}" ${CALC_4}
+        fi
+    fi
+fi

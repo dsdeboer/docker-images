@@ -18,7 +18,7 @@ CALC_2=$(echo ${DOCKER_TAG} | cut -d "-" -f2)
 CALC_3=$(echo ${DOCKER_TAG} | cut -d "-" -f3)
 CALC_4=$(echo ${DOCKER_TAG} | cut -d "-" -f4)
 
-PHP_VERSION=php74
+PHP_VERSION=7.4
 PHP_TYPE=cli
 APP_ENV=dev
 WITH_DATABASE=no
