@@ -11,14 +11,11 @@ docker build . \
     --build-arg version=$VERSION \
     --build-arg base_image=$BASE_IMAGE
 
-docker push $TAG
-
 image_id=$(docker images $TAG --format "{{.ID}}")
 for tag in ${EXTRA_TAGS//;/$'\n'}
 do
     echo $tag
     docker tag $image_id "charpand/frontend:${tag}"
-    docker push $image_id "charpand/frontend:${tag}"
 done
 
 docker run --rm --entrypoint echo "$TAG" "Hello $hello"
