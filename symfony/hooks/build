@@ -1,0 +1,9 @@
+#!/bin/bash
+
+docker build --target dev --build-arg PHP_VERSION=7.3 -t ${DOCKER_REPO}:7.3-dev -f Dockerfile .
+docker build --target prod --build-arg PHP_VERSION=7.3 -t ${DOCKER_REPO}:7.3-prod -f Dockerfile .
+docker build --target dev --build-arg PHP_VERSION=7.4 -t ${DOCKER_REPO}:7.4-dev -f Dockerfile .
+docker build --target prod --build-arg PHP_VERSION=7.4 -t ${DOCKER_REPO}:7.4-prod -f Dockerfile .
+docker build --target dev --build-arg PHP_VERSION=7.4 -t ${DOCKER_REPO}:dev -f Dockerfile .
+docker build --target prod --build-arg PHP_VERSION=7.4 -t ${DOCKER_REPO}:prod -f Dockerfile .
+docker build --target prod -t ${IMAGE_NAME} -f Dockerfile .
