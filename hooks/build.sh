@@ -5,7 +5,8 @@ TAG="charpand/frontend${VERSION:+:${VERSION}}-${MY_TARGET}"
 set -x
 docker build . \
     --no-cache \
-    --target $MY_TARGET
+    --quiet \
+    --target $MY_TARGET \
     -t "$TAG" \
     --build-arg version=$VERSION \
     --build-arg base_image=$BASE_IMAGE
