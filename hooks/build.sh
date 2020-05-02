@@ -4,7 +4,7 @@ TAG="charpand/frontend${VERSION:+:${VERSION}}${BASE_IMAGE_TAG:+-${BASE_IMAGE_TAG
 
 echo building ${TAG}
 
-printenv
+printenv | sort
 
 
 # set -x
