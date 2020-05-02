@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TAG="charpand/frontend${VERSION:+:${VERSION}}${BASE_IMAGE_TAG:+-${BASE_IMAGE_TAG}}${MY_TARGET}"
+TAG="charpand/frontend${VERSION:+:${VERSION}}-${MY_TARGET}"
 
 echo building ${TAG}
 
