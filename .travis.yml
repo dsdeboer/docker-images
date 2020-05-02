@@ -10,5 +10,6 @@ install:
   - git clone https://github.com/docker-library/official-images.git ~/official-images
 script:
   - "./hooks/build.sh"
+  - "./hooks/build-pgsql.sh"
 after_script:
   - docker images

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-TAG="charpand/frontend${VERSION:+:${VERSION}}-${MY_TARGET}"
+TAG="charpand/backend${VERSION:+:${VERSION}}-${MY_TARGET}"
 
 set -x
-docker build ./symfony \
+docker build ./symfony-pgsql \
     --no-cache \
     --quiet \
     --target $MY_TARGET \
@@ -18,9 +18,9 @@ image_id=$(docker images $TAG --format "{{.ID}}")
 for tag in ${EXTRA_TAGS//;/$'\n'}
 do
     echo $tag
-    docker tag $image_id "charpand/frontend:${tag}"
+    docker tag $image_id "charpand/backend:${tag}"
     echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-    docker push $image_id "charpand/frontend:${tag}"
+    docker push $image_id "charpand/backend:${tag}"
 done
 
 docker run --rm --entrypoint echo "$TAG" "Hello $hello"
