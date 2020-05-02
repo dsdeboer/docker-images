@@ -2,10 +2,10 @@ language: bash
 services: docker
 
 env:
-  - VERSION=7.4 BASE_IMAGE=php MY_TARGET=dev BASE_IMAGE_TAG="7.4-fpm-alpine" EXTRA_TAGS="dev"
-  - VERSION=7.4 BASE_IMAGE=php MY_TARGET=prod BASE_IMAGE_TAG="7.4-fpm-alpine" EXTRA_TAGS="latest;prod"
-  - VERSION=7.3 BASE_IMAGE=php MY_TARGET=dev BASE_IMAGE_TAG="7.3-fpm-alpine" EXTRA_TAGS=""
-  - VERSION=7.3 BASE_IMAGE=php MY_TARGET=prod BASE_IMAGE_TAG="7.3-fpm-alpine" EXTRA_TAGS=""
+  # - VERSION=7.4 BASE_IMAGE=php MY_TARGET=dev EXTRA_TAGS="dev"
+  # - VERSION=7.4 BASE_IMAGE=php MY_TARGET=prod EXTRA_TAGS="latest;prod"
+  - VERSION=7.3 BASE_IMAGE=php MY_TARGET=dev EXTRA_TAGS=""
+  # - VERSION=7.3 BASE_IMAGE=php MY_TARGET=prod EXTRA_TAGS=""
 
 install:
   - git clone https://github.com/docker-library/official-images.git ~/official-images

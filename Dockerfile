@@ -1,5 +1,7 @@
-ARG PHP_VERSION=7.4
-FROM php:${PHP_VERSION}-fpm-alpine as base
+ARG base_image=php
+ARG version=7.4
+
+FROM ${base_image}:${version}-fpm-alpine as base
 
 RUN set -ex \
     && apk add --update icu-dev oniguruma-dev libzip-dev libxml2-dev bzip2-dev curl-dev \
