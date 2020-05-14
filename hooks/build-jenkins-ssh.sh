@@ -1,12 +1,11 @@
 #!/bin/bash
 
-TAG="charpand/jenkins-ssh-agent${VERSION:+:${VERSION}}-${MY_TARGET}"
+TAG="charpand/jenkins-ssh-agent${VERSION:+:${VERSION}}"
 
 set -x
 docker build ./jenkins-ssh \
     --no-cache \
     --quiet \
-    --target $MY_TARGET \
     -t "$TAG" \
     --build-arg version=$VERSION
 
