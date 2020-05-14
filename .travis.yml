@@ -9,7 +9,8 @@ env:
 install:
   - git clone https://github.com/docker-library/official-images.git ~/official-images
 script:
-  - "./hooks/build.sh"
-  - "./hooks/build-pgsql.sh"
+  - "./hooks/build-frontend.sh"
+  - "./hooks/build-backend.sh"
+  - "./hooks/build-jenkins-ssh.sh"
 after_script:
   - docker images

@@ -2,6 +2,7 @@ ARG base_image=php
 ARG version=7.4
 
 FROM ${base_image}:${version}-fpm-alpine as base
+LABEL MAINTAINER="Duncan de Boer <duncan@charpand.nl>"
 
 RUN set -ex \
     && apk add --update icu-dev oniguruma-dev libzip-dev libxml2-dev bzip2-dev curl-dev postgresql-dev git \
