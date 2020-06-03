@@ -8,6 +8,7 @@ RUN set -ex \
     && apk add --update icu-dev oniguruma-dev libzip-dev libxml2-dev bzip2-dev curl-dev \
     && docker-php-ext-install -j4 intl mbstring zip xml bz2 curl json \
     && apk add tzdata \
+    && pecl install pcov
     && cp "/usr/share/zoneinfo/Europe/Amsterdam" /etc/localtime \
     && rm -rf /tmp/* /var/cache/apk/*
 
